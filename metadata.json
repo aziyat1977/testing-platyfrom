@@ -1,0 +1,5 @@
+{
+  "name": "LingoDeck",
+  "description": "An immersive, multi-themed educational slide deck viewer featuring three distinct lesson plans: The Oral Microbiome, Project Airbear, and The Year of the Soft Landing. Includes an AI Tutor for real-time concept explanation.",
+  "requestFramePermissions": []
+}
