@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Slide, ThemeType } from '../types';
 
 interface SlideViewProps {
@@ -46,6 +46,45 @@ const getThemeStyles = (theme: ThemeType) => {
 
 export const SlideView: React.FC<SlideViewProps> = ({ slide, theme }) => {
   const styles = getThemeStyles(theme);
+  const [quizState, setQuizState] = useState<Record<number, { selected?: number; revealed: boolean }>>({});
+  const [shuffledOptions, setShuffledOptions] = useState<Record<number, number[]>>({});
+
+  useEffect(() => {
+    // Reset quiz state when slide changes
+    setQuizState({});
+    
+    // Generate shuffled indices for each question to randomize options
+    if (slide.type === 'quiz' && slide.content.quizList) {
+      const newShuffled: Record<number, number[]> = {};
+      slide.content.quizList.forEach((q, qIdx) => {
+        if (q.options) {
+           const indices = q.options.map((_, i) => i);
+           // Shuffle indices
+           for (let i = indices.length - 1; i > 0; i--) {
+             const j = Math.floor(Math.random() * (i + 1));
+             [indices[i], indices[j]] = [indices[j], indices[i]];
+           }
+           newShuffled[qIdx] = indices;
+        }
+      });
+      setShuffledOptions(newShuffled);
+    }
+  }, [slide.id, slide.content.quizList]);
+
+  const handleOptionClick = (questionIdx: number, originalOptionIdx: number) => {
+    if (quizState[questionIdx]?.revealed) return;
+    setQuizState(prev => ({
+      ...prev,
+      [questionIdx]: { selected: originalOptionIdx, revealed: true }
+    }));
+  };
+
+  const handleReveal = (questionIdx: number) => {
+    setQuizState(prev => ({
+      ...prev,
+      [questionIdx]: { ...prev[questionIdx], revealed: true }
+    }));
+  };
 
   // --- Title Slide ---
   if (slide.type === 'title') {
@@ -115,20 +154,92 @@ export const SlideView: React.FC<SlideViewProps> = ({ slide, theme }) => {
         <h2 className={`text-3xl font-bold mb-8 pb-4 border-b ${styles.border} ${styles.fontHead}`}>
           {slide.title}
         </h2>
-        <div className="space-y-4 max-w-3xl mx-auto">
-          {slide.content.quizList?.map((q, idx) => (
-            <div key={idx} className={`p-6 rounded-lg ${styles.card}`}>
-              <div className="flex gap-4">
-                <span className={`font-bold text-xl ${styles.accent}`}>{idx + 1}.</span>
-                <div className="flex-1">
-                  <p className="text-xl mb-4">{q.question}</p>
-                  <div className={`p-4 rounded ${styles.accentBg} font-medium`}>
-                    Answer: <span className={styles.accent}>{q.answer}</span>
+        <div className="space-y-8 max-w-4xl mx-auto pb-20">
+          {slide.content.quizList?.map((q, idx) => {
+            const isRevealed = quizState[idx]?.revealed;
+            const selectedOpt = quizState[idx]?.selected;
+            const isCorrect = selectedOpt === q.correctOption;
+            const currentShuffledIndices = shuffledOptions[idx] || q.options?.map((_, i) => i) || [];
+
+            return (
+              <div key={idx} className={`p-6 rounded-xl ${styles.card}`}>
+                <div className="flex gap-4">
+                  <span className={`font-bold text-xl ${styles.accent} opacity-50`}>{idx + 1}.</span>
+                  <div className="flex-1 w-full">
+                    <p className="text-xl mb-6 font-medium leading-relaxed">{q.question}</p>
+                    
+                    {q.options ? (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {currentShuffledIndices.map((originalIndex) => {
+                          const opt = q.options![originalIndex];
+                          const isThisCorrect = originalIndex === q.correctOption;
+                          const isSelected = selectedOpt === originalIndex;
+                          
+                          let btnStyle = `p-4 rounded-lg border-2 text-left transition-all duration-200 relative overflow-hidden `;
+                          
+                          if (isRevealed) {
+                             if (isThisCorrect) {
+                               // Green for correct option
+                               btnStyle += `border-green-500 bg-green-500/10 text-green-500 font-bold`;
+                             } else if (isSelected && !isThisCorrect) {
+                               // Red for selected wrong option
+                               btnStyle += `border-red-500 bg-red-500/10 text-red-500`;
+                             } else {
+                               // Dim others
+                               btnStyle += `border-transparent opacity-30`;
+                             }
+                          } else {
+                            // Default interactive state
+                            btnStyle += `border-gray-500/30 hover:border-gray-400 hover:bg-white/5 active:scale-[0.99]`;
+                          }
+
+                          return (
+                            <button
+                              key={originalIndex}
+                              onClick={() => handleOptionClick(idx, originalIndex)}
+                              disabled={isRevealed}
+                              className={btnStyle}
+                            >
+                              <div className="flex justify-between items-center">
+                                <span>{opt}</span>
+                                {isRevealed && isThisCorrect && <span className="text-xl">✓</span>}
+                                {isRevealed && isSelected && !isThisCorrect && <span className="text-xl">✕</span>}
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      // Fallback for non-multiple choice
+                      <div className="mt-4">
+                        {!isRevealed ? (
+                          <button
+                            onClick={() => handleReveal(idx)}
+                            className={`px-6 py-2 rounded-lg font-bold transition-all ${styles.accentBg} ${styles.accent} hover:opacity-80`}
+                          >
+                            Reveal Answer
+                          </button>
+                        ) : (
+                          <div className={`p-4 rounded-lg border border-green-500/30 bg-green-500/10 text-green-400 animate-in fade-in slide-in-from-top-2`}>
+                            <span className="font-bold mr-2">Answer:</span>
+                            {q.answer}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    
+                    {/* Feedback Message */}
+                    {isRevealed && q.options && (
+                      <div className={`mt-4 text-sm font-bold ${isCorrect ? 'text-green-500' : 'text-red-500'} animate-pulse`}>
+                        {isCorrect ? "Correct! Well done." : `Incorrect. The correct answer is ${q.options[q.correctOption!]}.`}
+                      </div>
+                    )}
+
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     );
