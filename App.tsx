@@ -52,13 +52,13 @@ const App: React.FC = () => {
     <div className="flex h-screen w-screen overflow-hidden font-sans bg-gray-900">
       
       {/* Sidebar Navigation (Desktop) / Drawer (Mobile) */}
-      <div className={`fixed inset-y-0 left-0 z-40 w-64 bg-gray-900 text-white transform transition-transform duration-300 ease-in-out border-r border-gray-800 ${menuOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:static`}>
-        <div className="p-6 border-b border-gray-800 flex items-center gap-3">
+      <div className={`fixed inset-y-0 left-0 z-40 w-64 bg-gray-900 text-white transform transition-transform duration-300 ease-in-out border-r border-gray-800 ${menuOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:static flex flex-col`}>
+        <div className="p-6 border-b border-gray-800 flex items-center gap-3 flex-none">
           <div className="w-8 h-8 rounded bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center font-bold">LD</div>
           <h1 className="text-xl font-bold tracking-tight">LingoDeck</h1>
         </div>
         
-        <div className="p-4 space-y-2">
+        <div className="p-4 space-y-2 flex-1 overflow-y-auto">
           <p className="text-xs text-gray-500 uppercase font-bold px-2 mb-2">Lessons</p>
           {LESSONS.map(lesson => (
             <button
@@ -72,7 +72,7 @@ const App: React.FC = () => {
           ))}
         </div>
 
-        <div className="absolute bottom-0 w-full p-4 border-t border-gray-800">
+        <div className="flex-none w-full p-4 border-t border-gray-800">
            <div className="text-xs text-gray-500 text-center">
              Use Arrow Keys to Navigate
            </div>
@@ -80,10 +80,10 @@ const App: React.FC = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col relative h-full">
+      <div className="flex-1 flex flex-col relative h-full w-full overflow-hidden">
         
         {/* Mobile Header */}
-        <div className="md:hidden p-4 bg-gray-900 text-white flex justify-between items-center border-b border-gray-800 z-30">
+        <div className="md:hidden flex-none p-4 bg-gray-900 text-white flex justify-between items-center border-b border-gray-800 z-30">
           <button onClick={() => setMenuOpen(!menuOpen)} className="p-2">
             ☰
           </button>
@@ -91,14 +91,14 @@ const App: React.FC = () => {
           <div className="w-8"></div> {/* Spacer */}
         </div>
 
-        {/* Slide View */}
-        <div className="flex-1 relative overflow-hidden">
+        {/* Slide View Container */}
+        <div className="flex-1 relative overflow-hidden bg-gray-900">
            <SlideView slide={currentSlide} theme={activeLesson.theme} />
         </div>
 
         {/* Bottom Controls Bar */}
-        <div className={`h-16 border-t flex items-center justify-between px-6 z-30 ${activeLesson.theme === 'economy' ? 'bg-white border-stone-200 text-stone-800' : 'bg-gray-900 border-gray-800 text-white'}`}>
-          <div className="flex items-center gap-4 text-sm font-medium opacity-60">
+        <div className={`flex-none h-16 border-t flex items-center justify-between px-6 z-30 ${activeLesson.theme === 'economy' ? 'bg-white border-stone-200 text-stone-800' : 'bg-gray-900 border-gray-800 text-white'}`}>
+          <div className="flex items-center gap-4 text-xs md:text-sm font-medium opacity-60">
              Slide {currentSlideIndex + 1} / {activeLesson.slides.length}
           </div>
 
@@ -106,22 +106,22 @@ const App: React.FC = () => {
             <button 
               onClick={prevSlide}
               disabled={currentSlideIndex === 0}
-              className={`p-2 px-4 rounded-lg border transition-all ${currentSlideIndex === 0 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-gray-500/20'}`}
+              className={`p-2 px-4 rounded-lg border transition-all text-xs md:text-sm ${currentSlideIndex === 0 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-gray-500/20'}`}
             >
               Previous
             </button>
             <button 
               onClick={nextSlide}
               disabled={currentSlideIndex === activeLesson.slides.length - 1}
-              className={`p-2 px-4 rounded-lg transition-all font-bold text-white shadow-md disabled:opacity-50 disabled:cursor-not-allowed ${getThemeColor()}`}
+              className={`p-2 px-4 rounded-lg transition-all font-bold text-white shadow-md disabled:opacity-50 disabled:cursor-not-allowed text-xs md:text-sm ${getThemeColor()}`}
             >
-              Next Slide
+              Next
             </button>
           </div>
         </div>
 
         {/* Progress Bar */}
-        <div className="h-1 w-full bg-gray-700">
+        <div className="flex-none h-1 w-full bg-gray-700">
            <div 
              className={`h-full transition-all duration-300 ${getThemeColor()}`}
              style={{ width: `${((currentSlideIndex + 1) / activeLesson.slides.length) * 100}%` }}

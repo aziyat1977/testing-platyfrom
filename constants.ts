@@ -42,11 +42,14 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
-      // --- Split Quiz Section 1 ---
+      // --- Extensive Quiz Section 1 ---
       createQuizSlide(2.1, 'Which word relates to the complete set of DNA?', 'Genomic', ['Genetic', 'Genomic', 'Generic', 'Geriatric'], 1, 'Vocab Check'),
       createQuizSlide(2.2, 'A "Pathogen" is primarily defined as...', 'A disease causer', ['A helpful bacteria', 'A disease causer', 'A blood cell', 'A vitamin'], 1, 'Vocab Check'),
       createQuizSlide(2.3, 'What is the opposite of "Dysbiosis"?', 'Symbiosis', ['Symbiosis', 'Diagnosis', 'Hypnosis', 'Osmosis'], 0, 'Vocab Check'),
       createQuizSlide(2.4, 'Dysbiosis involves an ________ of microbes.', 'Imbalance', ['Imbalance', 'Improvement', 'Injection', 'Ignorance'], 0, 'Vocab Check'),
+      createQuizSlide(2.5, 'True or False: All bacteria are pathogens.', 'False', ['True', 'False'], 1, 'Concept Check'),
+      createQuizSlide(2.6, 'Which field studies the structure of DNA?', 'Genomics', ['Economics', 'Genomics', 'Physics', 'Ceramics'], 1, 'Vocab Check'),
+      createQuizSlide(2.7, 'Dysbiosis in the gut can lead to...', 'Disease', ['Superpowers', 'Disease', 'Better vision', 'Flight'], 1, 'Concept Check'),
       
       {
         id: 3,
@@ -60,11 +63,14 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
-      // --- Split Quiz Section 2 ---
+      // --- Extensive Quiz Section 2 ---
       createQuizSlide(3.1, 'If a tissue is "Vascular", it bleeds...', 'Easily', ['Easily', 'Rarely', 'Never', 'Slowly'], 0, 'Vocab Check'),
       createQuizSlide(3.2, 'A "Systemic" disease affects...', 'The whole body', ['Only the teeth', 'The whole body', 'The skin only', 'The hair'], 1, 'Vocab Check'),
       createQuizSlide(3.3, '"Gingival" health refers to the health of your...', 'Gums', ['Eyes', 'Lungs', 'Gums', 'Liver'], 2, 'Vocab Check'),
       createQuizSlide(3.4, 'Which organ system is "Vascular"?', 'Circulatory', ['Skeletal', 'Circulatory', 'Digestive', 'Nervous'], 1, 'Vocab Check'),
+      createQuizSlide(3.5, 'Gingivitis is the inflammation of...', 'Gums', ['Toes', 'Ears', 'Gums', 'Hair'], 2, 'Vocab Check'),
+      createQuizSlide(3.6, 'Systemic risk implies...', 'Widespread danger', ['Local danger', 'Widespread danger', 'No danger', 'Good luck'], 1, 'Vocab Check'),
+      createQuizSlide(3.7, 'The mouth is vascular, so bacteria enter the...', 'Bloodstream', ['Stomach', 'Bloodstream', 'Brain', 'Lungs'], 1, 'Concept Check'),
 
       {
         id: 4,
@@ -79,12 +85,15 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
-      // --- Split Quiz Section 3 ---
+      // --- Extensive Quiz Section 3 ---
       createQuizSlide(4.1, 'Bacteria that "Colonize" a surface...', 'Stay and grow', ['Pass through', 'Die immediately', 'Stay and grow', 'Float away'], 2, 'Vocab Check'),
       createQuizSlide(4.2, 'Signs of "Inflammation" include...', 'Redness and swelling', ['Coldness', 'Redness and swelling', 'Shrinking', 'Dryness'], 1, 'Vocab Check'),
       createQuizSlide(4.3, 'A "Therapeutic" massage is intended to...', 'Heal/Relax', ['Injure', 'Heal/Relax', 'Diagnose', 'Infect'], 1, 'Vocab Check'),
       createQuizSlide(4.4, '"Commensal" bacteria are usually...', 'Harmless/Friendly', ['Deadly', 'Harmless/Friendly', 'Artificial', 'Visible'], 1, 'Vocab Check'),
       createQuizSlide(4.5, 'Which word is a synonym for "Curative"?', 'Therapeutic', ['Systemic', 'Therapeutic', 'Pathogenic', 'Genomic'], 1, 'Vocab Check'),
+      createQuizSlide(4.6, 'To "Colonize" Mars means to...', 'Live there', ['Look at it', 'Live there', 'Destroy it', 'Ignore it'], 1, 'Concept Check'),
+      createQuizSlide(4.7, 'Inflammation is the body\'s response to...', 'Injury/Infection', ['Happiness', 'Sleep', 'Injury/Infection', 'Hunger'], 2, 'Concept Check'),
+      createQuizSlide(4.8, 'Commensalism is a type of...', 'Symbiosis', ['Disease', 'Symbiosis', 'War', 'Food'], 1, 'Vocab Check'),
 
       {
         id: 8,
@@ -111,7 +120,7 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
-      // --- Split Quiz Section 4 (Grammar) ---
+      // --- Extensive Quiz Section 4 (Grammar) ---
       createQuizSlide(13.1, 'Which verb implies 100% certainty?', 'Prove', ['Suggest', 'Suspect', 'Prove', 'Believe'], 2, 'Grammar Check'),
       createQuizSlide(13.2, 'If I "Suspect" something, I have...', 'A hunch/idea', ['Solid proof', 'A hunch/idea', 'A confirmed fact', 'A photograph'], 1, 'Grammar Check'),
       createQuizSlide(13.3, '"Studies suggest that..." means the result is...', 'Possible/Likely', ['Impossible', 'Absolute Fact', 'Possible/Likely', 'False'], 2, 'Grammar Check'),
@@ -119,6 +128,9 @@ export const LESSONS: Lesson[] = [
       createQuizSlide(13.5, 'Modern science has ________ the specific bacteria.', 'Identified', ['Guessed', 'Identified', 'Theorized', 'Suspected'], 1, 'Grammar Check'),
       createQuizSlide(13.6, 'Which is the WEAKEST reporting verb?', 'Speculate', ['Speculate', 'Demonstrate', 'Show', 'Establish'], 0, 'Grammar Check'),
       createQuizSlide(13.7, '"Implicated in" suggests a connection to...', 'Something bad', ['Something good', 'Something bad', 'Something neutral', 'Nothing'], 1, 'Grammar Check'),
+      createQuizSlide(13.8, '"Researchers have theorized..." implies...', 'An unproven idea', ['A solid fact', 'An unproven idea', 'A finished project', 'A lie'], 1, 'Grammar Check'),
+      createQuizSlide(13.9, 'Which verb fits: "The data _____ a clear trend."', 'Demonstrates', ['Guesses', 'Suspects', 'Demonstrates', 'Imagines'], 2, 'Grammar Check'),
+      createQuizSlide(13.10, '"To confirm" means to make something...', 'Certain', ['Uncertain', 'Certain', 'Unknown', 'False'], 1, 'Grammar Check'),
     ]
   },
   {
@@ -150,11 +162,14 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
-      // --- Split Quiz Section 1 ---
+      // --- Extensive Quiz Section 1 ---
       createQuizSlide(2.1, 'A "Cryptic" animal is...', 'Hard to see', ['Loud', 'Hard to see', 'Colorful', 'Friendly'], 1, 'Vocab Check'),
       createQuizSlide(2.2, 'The "Canopy" is found at the...', 'Top of trees', ['Bottom of trees', 'Roots', 'Top of trees', 'River bank'], 2, 'Vocab Check'),
       createQuizSlide(2.3, '"Refugia" provide...', 'Safety/Shelter', ['Food', 'Safety/Shelter', 'Water only', 'Danger'], 1, 'Vocab Check'),
       createQuizSlide(2.4, 'Koalas hide in the...', 'Canopy', ['Cave', 'Ocean', 'Canopy', 'Desert'], 2, 'Vocab Check'),
+      createQuizSlide(2.5, 'Cryptic crosswords are known for being...', 'Hidden/Tricky', ['Easy', 'Hidden/Tricky', 'Short', 'Blue'], 1, 'Concept Check'),
+      createQuizSlide(2.6, 'Birds often build nests in the...', 'Canopy', ['Basement', 'Canopy', 'Ocean', 'Sky'], 1, 'Vocab Check'),
+      createQuizSlide(2.7, 'During an ice age, animals retreat to...', 'Refugia', ['Cities', 'Refugia', 'Space', 'Glaciers'], 1, 'Concept Check'),
 
       {
         id: 3,
@@ -168,12 +183,15 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
-      // --- Split Quiz Section 2 ---
+      // --- Extensive Quiz Section 2 ---
       createQuizSlide(3.1, 'Hyperspectral cameras see...', 'More than eyes', ['Less than eyes', 'Black and white', 'More than eyes', 'Only heat'], 2, 'Vocab Check'),
       createQuizSlide(3.2, 'Every species has a unique spectral...', 'Signature', ['Autograph', 'Signature', 'Sound', 'Smell'], 1, 'Vocab Check'),
       createQuizSlide(3.3, 'An "Algorithm" is a set of...', 'Rules', ['Trees', 'Rules', 'Cameras', 'Sensors'], 1, 'Vocab Check'),
       createQuizSlide(3.4, 'AI uses ________ to process data.', 'Algorithms', ['Refugia', 'Algorithms', 'Canopies', 'Tannins'], 1, 'Vocab Check'),
       createQuizSlide(3.5, 'We identify trees by their light...', 'Signature', ['Weight', 'Height', 'Signature', 'Age'], 2, 'Vocab Check'),
+      createQuizSlide(3.6, 'A normal camera is NOT...', 'Hyperspectral', ['Digital', 'Hyperspectral', 'Useful', 'Real'], 1, 'Concept Check'),
+      createQuizSlide(3.7, 'Social media uses ________ to show ads.', 'Algorithms', ['Magic', 'Algorithms', 'Koalas', 'Refugia'], 1, 'Concept Check'),
+      createQuizSlide(3.8, 'A heat ________ is a type of signature.', 'Map', ['Book', 'Map', 'Food', 'Song'], 1, 'Vocab Check'),
 
       {
         id: 8,
@@ -189,13 +207,17 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
-      // --- Split Quiz Section 3 (Grammar) ---
+      // --- Extensive Quiz Section 3 (Grammar) ---
       createQuizSlide(12.1, 'Combine: "They fly drones. They scan trees."', 'By flying...', ['Flying drones, trees scan.', 'By flying drones, they scan trees.', 'To fly drones, trees scan.', 'Drones fly by scanning.'], 1, 'Grammar Check'),
       createQuizSlide(12.2, 'Combine: "We analyze light. We find protein."', 'By analyzing...', ['By analyzing light, we find protein.', 'We find light by analyzing protein.', 'Analyze light to find protein.', 'Found protein by analyze light.'], 0, 'Grammar Check'),
       createQuizSlide(12.3, 'Which preposition follows "achieved"?', 'By/Through', ['At', 'On', 'By/Through', 'In'], 2, 'Grammar Check'),
       createQuizSlide(12.4, '"_____ using a thermal camera, we see heat."', 'By', ['To', 'For', 'By', 'At'], 2, 'Grammar Check'),
       createQuizSlide(12.5, 'Success was reached _____ hard work.', 'By means of', ['Instead of', 'By means of', 'In spite of', 'Next to'], 1, 'Grammar Check'),
       createQuizSlide(12.6, '"By _____ (mount) the sensor..."', 'Mounting', ['Mount', 'Mounts', 'Mounting', 'Mounted'], 2, 'Grammar Check'),
+      createQuizSlide(12.7, 'Identify the method: "He learned by reading."', 'Reading', ['He', 'Learned', 'Reading', 'By'], 2, 'Grammar Check'),
+      createQuizSlide(12.8, 'Which is correct?', 'By working hard...', ['By work hard', 'By working hard', 'By worked hard', 'By works hard'], 1, 'Grammar Check'),
+      createQuizSlide(12.9, '"Through" can be a synonym for...', 'By means of', ['Under', 'Over', 'By means of', 'Against'], 2, 'Grammar Check'),
+      createQuizSlide(12.10, 'Passive Voice: "The data is processed _____ the algorithm."', 'By', ['Of', 'By', 'To', 'From'], 1, 'Grammar Check'),
     ]
   },
   {
@@ -227,11 +249,14 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
-      // --- Split Quiz Section 1 ---
+      // --- Extensive Quiz Section 1 ---
       createQuizSlide(2.1, 'A "Recession" is a period of...', 'Decline', ['Growth', 'Decline', 'Stability', 'Boom'], 1, 'Vocab Check'),
       createQuizSlide(2.2, 'During "Inflation", money buys...', 'Less', ['More', 'The same', 'Less', 'Everything'], 2, 'Vocab Check'),
       createQuizSlide(2.3, '"Fiscal" policy relates to...', 'Taxes/Gov Spending', ['Bank interest', 'Taxes/Gov Spending', 'Imports', 'Technology'], 1, 'Vocab Check'),
       createQuizSlide(2.4, 'The opposite of a "Recession" is...', 'Expansion/Boom', ['Crash', 'Inflation', 'Expansion/Boom', 'Deficit'], 2, 'Vocab Check'),
+      createQuizSlide(2.5, 'Hyperinflation means prices rise...', 'Very fast', ['Slowly', 'Very fast', 'Never', 'Backwards'], 1, 'Vocab Check'),
+      createQuizSlide(2.6, 'The "Fiscal" year is the...', 'Financial year', ['Calendar year', 'Financial year', 'Leap year', 'New year'], 1, 'Concept Check'),
+      createQuizSlide(2.7, 'Two quarters of negative growth usually define a...', 'Recession', ['Holiday', 'Recession', 'Boom', 'Rally'], 1, 'Concept Check'),
 
       {
         id: 3,
@@ -245,11 +270,14 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
-      // --- Split Quiz Section 2 ---
+      // --- Extensive Quiz Section 2 ---
       createQuizSlide(3.1, '"Decoupling" means...', 'Separating', ['Joining', 'Separating', 'Fixing', 'Buying'], 1, 'Vocab Check'),
       createQuizSlide(3.2, 'If the market undergoes "Fragmentation", it...', 'Breaks apart', ['Unites', 'Grows', 'Breaks apart', 'Stops'], 2, 'Vocab Check'),
       createQuizSlide(3.3, 'To "Precipitate" a crisis is to...', 'Cause it suddenly', ['Stop it', 'Predict it', 'Cause it suddenly', 'Watch it'], 2, 'Vocab Check'),
       createQuizSlide(3.4, 'Which word suggests breaking into pieces?', 'Fragmentation', ['Decoupling', 'Fragmentation', 'Fiscal', 'Recession'], 1, 'Vocab Check'),
+      createQuizSlide(3.5, 'A "Coupled" train is...', 'Connected', ['Separated', 'Connected', 'Broken', 'Fast'], 1, 'Concept Check'),
+      createQuizSlide(3.6, 'Fragmentation of the hard drive makes it...', 'Slower/Inefficient', ['Faster', 'Slower/Inefficient', 'New', 'Blue'], 1, 'Concept Check'),
+      createQuizSlide(3.7, 'Rain is a form of...', 'Precipitation', ['Inflation', 'Precipitation', 'Decoupling', 'Fiscal'], 1, 'Vocab Check'),
 
       {
         id: 4,
@@ -264,12 +292,15 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
-      // --- Split Quiz Section 3 ---
+      // --- Extensive Quiz Section 3 ---
       createQuizSlide(4.1, 'A "Bottleneck" causes...', 'Delays', ['Speed', 'Delays', 'Profits', 'Freedom'], 1, 'Vocab Check'),
       createQuizSlide(4.2, 'Software is an ________ asset.', 'Intangible', ['Intangible', 'Physical', 'Heavy', 'Liquid'], 0, 'Vocab Check'),
       createQuizSlide(4.3, 'A "Trilemma" involves how many choices?', 'Three', ['Two', 'Three', 'Four', 'Infinite'], 1, 'Vocab Check'),
       createQuizSlide(4.4, '"Resilience" is the ability to...', 'Bounce back', ['Break', 'Bounce back', 'Give up', 'Predict'], 1, 'Vocab Check'),
       createQuizSlide(4.5, 'Which is NOT intangible?', 'Gold bar', ['Copyright', 'Brand', 'Gold bar', 'Patent'], 2, 'Vocab Check'),
+      createQuizSlide(4.6, 'Traffic ________ slow down cars.', 'Bottlenecks', ['Highways', 'Bottlenecks', 'Clouds', 'Birds'], 1, 'Vocab Check'),
+      createQuizSlide(4.7, 'A Dilemma has 2 choices; a Trilemma has...', '3', ['2', '3', '4', '5'], 1, 'Concept Check'),
+      createQuizSlide(4.8, 'Rubber is ________; it bounces back.', 'Resilient', ['Brittle', 'Resilient', 'Liquid', 'Gas'], 1, 'Concept Check'),
 
       {
         id: 8,
@@ -287,13 +318,17 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
-      // --- Split Quiz Section 4 (Grammar) ---
+      // --- Extensive Quiz Section 4 (Grammar) ---
       createQuizSlide(13.1, 'Which word shows contrast?', 'However', ['And', 'So', 'However', 'Thus'], 2, 'Grammar Check'),
       createQuizSlide(13.2, '"She is rich, _____ she is unhappy."', 'Yet/But', ['So', 'Because', 'Yet/But', 'Therefore'], 2, 'Grammar Check'),
       createQuizSlide(13.3, '"_____ it rained, we played."', 'Although', ['Because', 'However', 'Although', 'Despite'], 2, 'Grammar Check'),
       createQuizSlide(13.4, '"Prices rose. _____, sales fell."', 'Conversely', ['Also', 'Conversely', 'Similarly', 'And'], 1, 'Grammar Check'),
       createQuizSlide(13.5, '"While" is used to show...', 'Simultaneous contrast', ['Cause', 'Effect', 'Simultaneous contrast', 'Time only'], 2, 'Grammar Check'),
       createQuizSlide(13.6, '"Despite" is followed by a...', 'Noun/Gerund', ['Sentence', 'Noun/Gerund', 'Verb', 'Adjective'], 1, 'Grammar Check'),
+      createQuizSlide(13.7, '"I like tea. _____, I hate coffee."', 'On the other hand', ['Also', 'On the other hand', 'Therefore', 'So'], 1, 'Grammar Check'),
+      createQuizSlide(13.8, 'Contrast: "Fast cars are fun; ____ they are dangerous."', 'However', ['And', 'However', 'So', 'Or'], 1, 'Grammar Check'),
+      createQuizSlide(13.9, '"Even though" is similar to...', 'Although', ['Because', 'Although', 'So', 'If'], 1, 'Grammar Check'),
+      createQuizSlide(13.10, 'Which is formal?', 'Nevertheless', ['But', 'So', 'And', 'Nevertheless'], 3, 'Grammar Check'),
     ]
   }
 ];

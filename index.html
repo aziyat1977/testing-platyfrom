@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full w-full overflow-hidden">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>LingoDeck - Immersive Learning</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
@@ -14,6 +14,12 @@
               sans: ['Inter', 'sans-serif'],
               mono: ['JetBrains Mono', 'monospace'],
               serif: ['Playfair Display', 'serif'],
+            },
+            colors: {
+              kRed: '#e21b3c',
+              kBlue: '#1368ce',
+              kYellow: '#d89e00',
+              kGreen: '#26890c',
             },
             animation: {
               'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
@@ -27,6 +33,10 @@
               'draw-line': 'drawLine 1.5s ease-out forwards',
               'shimmer': 'shimmer 2.5s linear infinite',
               'gradient-x': 'gradientX 15s ease infinite',
+              'glitch': 'glitch 1s linear infinite',
+              'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+              'orbit': 'orbit 10s linear infinite',
+              'slide-up-fade': 'slideUpFade 0.5s ease-out forwards',
             },
             keyframes: {
               scanline: {
@@ -68,14 +78,27 @@
                 '100%': { backgroundPosition: '1000px 0' }
               },
               gradientX: {
-                '0%, 100%': {
-                    'background-size': '200% 200%',
-                    'background-position': 'left center'
-                },
-                '50%': {
-                    'background-size': '200% 200%',
-                    'background-position': 'right center'
-                }
+                '0%, 100%': { 'background-size': '200% 200%', 'background-position': 'left center' },
+                '50%': { 'background-size': '200% 200%', 'background-position': 'right center' }
+              },
+              glitch: {
+                '2%, 64%': { transform: 'translate(2px,0) skew(0deg)' },
+                '4%, 60%': { transform: 'translate(-2px,0) skew(0deg)' },
+                '62%': { transform: 'translate(0,0) skew(5deg)' }
+              },
+              shake: {
+                '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+              },
+              orbit: {
+                '0%': { transform: 'rotate(0deg) translateX(50px) rotate(0deg)' },
+                '100%': { transform: 'rotate(360deg) translateX(50px) rotate(-360deg)' }
+              },
+              slideUpFade: {
+                '0%': { opacity: '0', transform: 'translateY(100px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' }
               }
             }
           },
@@ -104,6 +127,9 @@
       .preserve-3d {
         transform-style: preserve-3d;
       }
+      .backface-hidden {
+        backface-visibility: hidden;
+      }
     </style>
   <script type="importmap">
 {
@@ -116,7 +142,7 @@
 }
 </script>
 </head>
-  <body>
-    <div id="root"></div>
+  <body class="h-full w-full bg-gray-900">
+    <div id="root" class="h-full w-full"></div>
   </body>
 </html>
