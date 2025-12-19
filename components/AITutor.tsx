@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI } from "@google/genai";
-import { Slide } from '../types';
+import { Slide, ThemeType } from '../types';
 
 interface AITutorProps {
   currentSlide: Slide;
   themeColor: string;
+  theme: ThemeType;
 }
 
 interface Message {
@@ -12,134 +13,132 @@ interface Message {
   text: string;
 }
 
-export const AITutor: React.FC<AITutorProps> = ({ currentSlide, themeColor }) => {
+const SUGGESTIONS = [
+  "Explain this slide simply",
+  "Give me a real-world example",
+  "Quiz me on this topic",
+  "Summarize key points"
+];
+
+export const AITutor: React.FC<AITutorProps> = ({ currentSlide, themeColor, theme }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
-  const [messages, setMessages] = useState<Message[]>([
-    { role: 'model', text: 'Hello! I can help you understand this slide. What\'s your question?' }
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
+  // Initial Greeting
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, isOpen]);
-
-  // Reset chat when slide changes
-  useEffect(() => {
-     setMessages([{ role: 'model', text: `Hello! I can help you understand this slide about "${currentSlide.title}". What's your question?` }]);
-     setError(null);
+     setMessages([{ role: 'model', text: `I'm ready to help with "${currentSlide.title}". What do you need?` }]);
   }, [currentSlide.id]);
 
-  const handleAsk = async () => {
-    if (!query.trim()) return;
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isOpen]);
 
-    const userMsg: Message = { role: 'user', text: query };
+  const handleAsk = async (text: string) => {
+    if (!text.trim()) return;
+
+    const userMsg: Message = { role: 'user', text };
     setMessages(prev => [...prev, userMsg]);
     setQuery('');
     setLoading(true);
-    setError(null);
 
     try {
       if (!process.env.API_KEY) {
-         throw new Error("API Key not found. Please set REACT_APP_GEMINI_API_KEY.");
+         throw new Error("Missing API Key");
       }
 
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      
-      // Construct context based on slide content
-      // We send the current slide content + the last few messages for context if needed, 
-      // but 'generateContent' is stateless, so we provide the necessary context in the prompt.
-      const slideContext = `
-        You are an expert academic tutor. The student is currently viewing a slide titled "${currentSlide.title}".
-        Content of the slide: 
-        ${currentSlide.content.heading || ''}
-        ${currentSlide.content.text?.join('\n') || ''}
-        ${currentSlide.content.vocabList?.map(v => `${v.word}: ${v.definition}`).join('\n') || ''}
-        ${currentSlide.content.quizList?.map(q => `Q: ${q.question} A: ${q.answer}`).join('\n') || ''}
+      const prompt = `
+        Context: Educational slide titled "${currentSlide.title}".
+        Theme: ${theme}.
+        Content: ${JSON.stringify(currentSlide.content)}
         
-        Respond to the user's question based on this context. 
-        Keep the answer concise (under 100 words) and encouraging.
+        Task: Answer the student's question efficiently. Be encouraging. Max 80 words.
+        Student: ${text}
       `;
-
-      const prompt = `${slideContext}\n\nUser Question: ${userMsg.text}`;
 
       const result = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: prompt,
       });
 
-      const responseText = result.text || "I couldn't generate a response.";
-      setMessages(prev => [...prev, { role: 'model', text: responseText }]);
+      setMessages(prev => [...prev, { role: 'model', text: result.text || "I'm thinking..." }]);
 
-    } catch (err: any) {
-      console.error(err);
-      setError("AI Service unavailable (Check API Key). " + (err.message || ''));
-      setMessages(prev => [...prev, { role: 'model', text: "Sorry, I encountered an error. Please check your API key." }]);
+    } catch (err) {
+      setMessages(prev => [...prev, { role: 'model', text: "Connection error. Please try again." }]);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className={`fixed bottom-4 right-4 z-50 flex flex-col items-end`}>
-      {/* Chat Window */}
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-auto">
+      
+      {/* Chat Container */}
       {isOpen && (
-        <div className={`mb-4 w-80 md:w-96 rounded-xl shadow-2xl overflow-hidden border border-gray-200 bg-white text-gray-800 flex flex-col animate-pop-in`}>
-          <div className={`p-4 ${themeColor} text-white font-bold flex justify-between items-center`}>
-            <span>AI Tutor</span>
-            <button onClick={() => setIsOpen(false)} className="hover:text-gray-200">✕</button>
+        <div className="mb-4 w-80 md:w-96 rounded-2xl shadow-2xl border border-white/20 overflow-hidden flex flex-col animate-pop-in bg-white/90 dark:bg-gray-900/95 backdrop-blur-xl text-sm">
+          {/* Header */}
+          <div className={`${themeColor} p-4 text-white font-bold flex justify-between items-center shadow-md`}>
+            <div className="flex items-center gap-2">
+              <span className="animate-pulse">✨</span> AI Tutor
+            </div>
+            <button onClick={() => setIsOpen(false)} className="hover:bg-white/20 rounded-full p-1 transition-colors">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
           </div>
           
-          <div className="p-4 h-80 overflow-y-auto bg-gray-50 text-sm space-y-3">
+          {/* Messages */}
+          <div className="h-80 overflow-y-auto p-4 space-y-4 bg-gray-50/50 dark:bg-black/20">
              {messages.map((msg, idx) => (
                <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[85%] p-3 rounded-lg ${
+                  <div className={`max-w-[85%] p-3 rounded-2xl shadow-sm ${
                     msg.role === 'user' 
-                      ? 'bg-gray-200 rounded-tr-none text-gray-800' 
-                      : 'bg-blue-100 rounded-tl-none text-gray-900'
+                      ? 'bg-blue-600 text-white rounded-tr-sm' 
+                      : 'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-tl-sm border border-gray-100 dark:border-gray-700'
                   }`}>
                     {msg.text}
                   </div>
                </div>
              ))}
-
              {loading && (
                <div className="flex justify-start">
-                  <div className="bg-blue-50 p-3 rounded-lg rounded-tl-none flex items-center space-x-2 text-gray-500">
+                  <div className="bg-white dark:bg-gray-800 p-3 rounded-2xl rounded-tl-sm flex gap-1">
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-75"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-150"></div>
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-100"></div>
                   </div>
-               </div>
-             )}
-             
-             {error && (
-               <div className="bg-red-50 text-red-600 p-2 rounded text-xs text-center">
-                 {error}
                </div>
              )}
              <div ref={messagesEndRef} />
           </div>
 
-          <div className="p-3 border-t bg-white flex gap-2">
+          {/* Suggestions */}
+          <div className="p-2 flex gap-2 overflow-x-auto custom-scrollbar border-t border-gray-200 dark:border-gray-700">
+            {SUGGESTIONS.map((s, i) => (
+              <button 
+                key={i}
+                onClick={() => handleAsk(s)}
+                className="whitespace-nowrap px-3 py-1 bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 text-xs rounded-full border border-gray-200 dark:border-gray-700 transition-colors"
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+
+          {/* Input */}
+          <div className="p-3 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 flex gap-2">
             <input 
-              type="text" 
-              className="flex-1 border border-gray-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-blue-500"
-              placeholder="Ask a question..."
+              className="flex-1 bg-transparent border border-gray-300 dark:border-gray-700 rounded-full px-4 py-2 focus:outline-none focus:border-blue-500 transition-colors"
+              placeholder="Ask anything..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleAsk()}
+              onKeyDown={(e) => e.key === 'Enter' && handleAsk(query)}
             />
             <button 
-              onClick={handleAsk}
-              disabled={loading}
-              className={`${themeColor} text-white rounded-full p-2 w-10 h-10 flex items-center justify-center hover:opacity-90 disabled:opacity-50`}
+              onClick={() => handleAsk(query)}
+              disabled={loading || !query.trim()}
+              className={`${themeColor} text-white w-10 h-10 rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg disabled:opacity-50 disabled:scale-100`}
             >
               ➤
             </button>
@@ -147,13 +146,15 @@ export const AITutor: React.FC<AITutorProps> = ({ currentSlide, themeColor }) =>
         </div>
       )}
 
-      {/* Toggle Button */}
+      {/* Launcher */}
       {!isOpen && (
         <button 
           onClick={() => setIsOpen(true)}
-          className={`${themeColor} text-white px-6 py-3 rounded-full shadow-lg font-bold flex items-center gap-2 hover:scale-105 transition-transform`}
+          className={`group flex items-center gap-2 ${themeColor} text-white px-5 py-3 rounded-full shadow-2xl hover:scale-110 transition-all duration-300 animate-float-delayed`}
         >
-          <span>✨ Ask AI Tutor</span>
+          <span className="text-xl">🤖</span>
+          <span className="font-bold pr-2">Tutor</span>
+          <span className="bg-white text-black text-xs font-bold px-1.5 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity absolute -top-2 -right-2">1</span>
         </button>
       )}
     </div>
