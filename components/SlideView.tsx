@@ -20,9 +20,17 @@ class AudioSynth {
     }
   }
 
+  resume() {
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume().catch(e => console.error(e));
+    }
+  }
+
   // Play a funky bassline loop
   startThinkingMusic() {
-    if (!this.ctx || this.isPlayingBg) return;
+    if (!this.ctx) return;
+    this.resume();
+    if (this.isPlayingBg) return;
     this.isPlayingBg = true;
     
     let step = 0;
@@ -71,6 +79,7 @@ class AudioSynth {
 
   playTone(freq: number, type: OscillatorType = 'sine', duration: number = 0.1, vol: number = 0.1) {
     if (!this.ctx) return;
+    this.resume();
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
     
@@ -106,6 +115,10 @@ class AudioSynth {
 
   playTick() {
     this.playTone(800, 'triangle', 0.05, 0.05);
+  }
+
+  playHover() {
+    this.playTone(400, 'sine', 0.05, 0.02);
   }
 }
 
@@ -239,6 +252,7 @@ export const SlideView: React.FC<SlideViewProps> = ({ slide, theme }) => {
 
     // Animation Loop
     const render = () => {
+      if (!canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       if (theme === 'microbiome') {
@@ -297,6 +311,7 @@ export const SlideView: React.FC<SlideViewProps> = ({ slide, theme }) => {
     setQuizState({ revealed: false });
     setTimeLeft(20);
     setScore(0);
+    setShuffledOptions([]); // Clear previous options immediately
     synthRef.current?.stopThinkingMusic();
 
     if (slide.type === 'quiz' && slide.content.quizList && slide.content.quizList.length > 0) {
@@ -334,6 +349,7 @@ export const SlideView: React.FC<SlideViewProps> = ({ slide, theme }) => {
   // --- Handlers ---
   const handleOptionClick = (originalOptionIdx: number) => {
     if (quizState.revealed) return;
+    synthRef.current?.resume();
     
     // Calculate Score based on Time Left
     const points = Math.round(1000 * (timeLeft / 20));
@@ -350,7 +366,10 @@ export const SlideView: React.FC<SlideViewProps> = ({ slide, theme }) => {
   };
 
   const handleHover = () => {
-    if (!quizState.revealed) synthRef.current?.playHover();
+    if (!quizState.revealed) {
+        synthRef.current?.resume();
+        synthRef.current?.playHover();
+    }
   };
 
   const speak = (text: string) => {
@@ -448,7 +467,8 @@ export const SlideView: React.FC<SlideViewProps> = ({ slide, theme }) => {
     const isRevealed = quizState.revealed;
     const selectedOpt = quizState.selected;
     const isCorrect = selectedOpt === q.correctOption;
-    const currentShuffledIndices = shuffledOptions.length ? shuffledOptions : q.options?.map((_, i) => i) || [];
+    // Safely fallback to unshuffled indices if shuffledOptions is empty
+    const currentShuffledIndices = shuffledOptions.length > 0 ? shuffledOptions : q.options?.map((_, i) => i) || [];
     
     // Kahoot Colors
     const kahootColors = [
