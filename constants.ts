@@ -1,5 +1,17 @@
 import { Lesson } from './types';
 
+// Helper to create single-question slides
+const createQuizSlide = (id: number, question: string, answer: string, options: string[], correctOption: number, titlePrefix: string) => ({
+  id,
+  type: 'quiz' as const,
+  title: `${titlePrefix} - Q${id}`,
+  content: {
+    quizList: [
+      { question, answer, options, correctOption }
+    ]
+  }
+});
+
 export const LESSONS: Lesson[] = [
   {
     id: 'lesson-1',
@@ -30,6 +42,12 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
+      // --- Split Quiz Section 1 ---
+      createQuizSlide(2.1, 'Which word relates to the complete set of DNA?', 'Genomic', ['Genetic', 'Genomic', 'Generic', 'Geriatric'], 1, 'Vocab Check'),
+      createQuizSlide(2.2, 'A "Pathogen" is primarily defined as...', 'A disease causer', ['A helpful bacteria', 'A disease causer', 'A blood cell', 'A vitamin'], 1, 'Vocab Check'),
+      createQuizSlide(2.3, 'What is the opposite of "Dysbiosis"?', 'Symbiosis', ['Symbiosis', 'Diagnosis', 'Hypnosis', 'Osmosis'], 0, 'Vocab Check'),
+      createQuizSlide(2.4, 'Dysbiosis involves an ________ of microbes.', 'Imbalance', ['Imbalance', 'Improvement', 'Injection', 'Ignorance'], 0, 'Vocab Check'),
+      
       {
         id: 3,
         type: 'vocab',
@@ -42,6 +60,12 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
+      // --- Split Quiz Section 2 ---
+      createQuizSlide(3.1, 'If a tissue is "Vascular", it bleeds...', 'Easily', ['Easily', 'Rarely', 'Never', 'Slowly'], 0, 'Vocab Check'),
+      createQuizSlide(3.2, 'A "Systemic" disease affects...', 'The whole body', ['Only the teeth', 'The whole body', 'The skin only', 'The hair'], 1, 'Vocab Check'),
+      createQuizSlide(3.3, '"Gingival" health refers to the health of your...', 'Gums', ['Eyes', 'Lungs', 'Gums', 'Liver'], 2, 'Vocab Check'),
+      createQuizSlide(3.4, 'Which organ system is "Vascular"?', 'Circulatory', ['Skeletal', 'Circulatory', 'Digestive', 'Nervous'], 1, 'Vocab Check'),
+
       {
         id: 4,
         type: 'vocab',
@@ -55,59 +79,13 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
-      {
-        id: 5,
-        type: 'quiz',
-        title: 'Vocabulary Check: Fill in the Blanks',
-        content: {
-          quizList: [
-            { 
-              question: 'The mouth is highly ________, meaning bacteria can enter the blood easily.', 
-              answer: 'vascular',
-              options: ['vascular', 'genomic', 'systemic', 'commensal'],
-              correctOption: 0
-            },
-            { 
-              question: 'P. gingivalis is a dangerous ________ found in the gums.', 
-              answer: 'pathogen',
-              options: ['commensal', 'pathogen', 'enzyme', 'genome'],
-              correctOption: 1
-            },
-            { 
-              question: 'Sugar consumption can lead to ________, an imbalance of bacteria.', 
-              answer: 'dysbiosis',
-              options: ['symbiosis', 'dysbiosis', 'diagnosis', 'hypnosis'],
-              correctOption: 1
-            },
-            { 
-              question: 'Doctors hope to use oral microbes for ________ purposes to cure diseases.', 
-              answer: 'therapeutic',
-              options: ['cosmetic', 'systemic', 'therapeutic', 'genetic'],
-              correctOption: 2
-            },
-            { 
-              question: 'Once in the blood, bacteria can ________ distant organs like the heart.', 
-              answer: 'colonize',
-              options: ['colonize', 'terrorize', 'vaporize', 'analyze'],
-              correctOption: 0
-            }
-          ]
-        }
-      },
-      {
-        id: 6,
-        type: 'quiz',
-        title: 'Vocabulary Check: Rapid Fire',
-        content: {
-          quizList: [
-            { question: 'Which word means "a disease-causing germ"?', answer: 'Pathogen', options: ['Pathogen', 'Genome', 'Dysbiosis', 'Commensal'], correctOption: 0 },
-            { question: '"Vascular" refers to...?', answer: 'Blood vessels', options: ['Blood vessels', 'Bones', 'Nerves', 'Skin'], correctOption: 0 },
-            { question: 'The opposite of a balanced microbiome is...?', answer: 'Dysbiosis', options: ['Symbiosis', 'Dysbiosis', 'Diagnosis', 'Prognosis'], correctOption: 1 },
-            { question: '"Systemic" implies the disease is...?', answer: 'Everywhere in the body', options: ['Localized', 'Everywhere in the body', 'Only in the mouth', 'Mental'], correctOption: 1 },
-            { question: 'A "Therapeutic" approach is focused on...?', answer: 'Healing', options: ['Healing', 'Hurting', 'Diagnosing', 'Ignoring'], correctOption: 0 }
-          ]
-        }
-      },
+      // --- Split Quiz Section 3 ---
+      createQuizSlide(4.1, 'Bacteria that "Colonize" a surface...', 'Stay and grow', ['Pass through', 'Die immediately', 'Stay and grow', 'Float away'], 2, 'Vocab Check'),
+      createQuizSlide(4.2, 'Signs of "Inflammation" include...', 'Redness and swelling', ['Coldness', 'Redness and swelling', 'Shrinking', 'Dryness'], 1, 'Vocab Check'),
+      createQuizSlide(4.3, 'A "Therapeutic" massage is intended to...', 'Heal/Relax', ['Injure', 'Heal/Relax', 'Diagnose', 'Infect'], 1, 'Vocab Check'),
+      createQuizSlide(4.4, '"Commensal" bacteria are usually...', 'Harmless/Friendly', ['Deadly', 'Harmless/Friendly', 'Artificial', 'Visible'], 1, 'Vocab Check'),
+      createQuizSlide(4.5, 'Which word is a synonym for "Curative"?', 'Therapeutic', ['Systemic', 'Therapeutic', 'Pathogenic', 'Genomic'], 1, 'Vocab Check'),
+
       {
         id: 8,
         type: 'grammar',
@@ -133,20 +111,14 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
-      {
-        id: 13,
-        type: 'quiz',
-        title: 'Grammar Assessment',
-        content: {
-          quizList: [
-            { question: 'Which verb shows the strongest evidence?', answer: 'Find', options: ['Suspect', 'Suggest', 'Find', 'Theorize'], correctOption: 2 },
-            { question: '"Implicated in" means:', answer: 'Connected to a crime/problem', options: ['Proven innocent', 'Connected to a crime/problem', 'Cured', 'Unrelated'], correctOption: 1 },
-            { question: '"Researchers found that..." is followed by:', answer: 'A full clause', options: ['A full clause', 'An infinitive', 'A noun', 'A gerund'], correctOption: 0 },
-            { question: '"Hypothesis" pairs best with:', answer: 'Suggest', options: ['Suggest', 'Prove', 'Confirm', 'Identify'], correctOption: 0 },
-            { question: '"Hard science" turns suspicion into:', answer: 'Fact', options: ['Fact', 'Theory', 'Guess', 'Opinion'], correctOption: 0 }
-          ]
-        }
-      }
+      // --- Split Quiz Section 4 (Grammar) ---
+      createQuizSlide(13.1, 'Which verb implies 100% certainty?', 'Prove', ['Suggest', 'Suspect', 'Prove', 'Believe'], 2, 'Grammar Check'),
+      createQuizSlide(13.2, 'If I "Suspect" something, I have...', 'A hunch/idea', ['Solid proof', 'A hunch/idea', 'A confirmed fact', 'A photograph'], 1, 'Grammar Check'),
+      createQuizSlide(13.3, '"Studies suggest that..." means the result is...', 'Possible/Likely', ['Impossible', 'Absolute Fact', 'Possible/Likely', 'False'], 2, 'Grammar Check'),
+      createQuizSlide(13.4, 'Avicenna ________ the link centuries ago.', 'Suspected', ['Proved', 'Suspected', 'Confirmed', 'Identified'], 1, 'Grammar Check'),
+      createQuizSlide(13.5, 'Modern science has ________ the specific bacteria.', 'Identified', ['Guessed', 'Identified', 'Theorized', 'Suspected'], 1, 'Grammar Check'),
+      createQuizSlide(13.6, 'Which is the WEAKEST reporting verb?', 'Speculate', ['Speculate', 'Demonstrate', 'Show', 'Establish'], 0, 'Grammar Check'),
+      createQuizSlide(13.7, '"Implicated in" suggests a connection to...', 'Something bad', ['Something good', 'Something bad', 'Something neutral', 'Nothing'], 1, 'Grammar Check'),
     ]
   },
   {
@@ -178,6 +150,12 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
+      // --- Split Quiz Section 1 ---
+      createQuizSlide(2.1, 'A "Cryptic" animal is...', 'Hard to see', ['Loud', 'Hard to see', 'Colorful', 'Friendly'], 1, 'Vocab Check'),
+      createQuizSlide(2.2, 'The "Canopy" is found at the...', 'Top of trees', ['Bottom of trees', 'Roots', 'Top of trees', 'River bank'], 2, 'Vocab Check'),
+      createQuizSlide(2.3, '"Refugia" provide...', 'Safety/Shelter', ['Food', 'Safety/Shelter', 'Water only', 'Danger'], 1, 'Vocab Check'),
+      createQuizSlide(2.4, 'Koalas hide in the...', 'Canopy', ['Cave', 'Ocean', 'Canopy', 'Desert'], 2, 'Vocab Check'),
+
       {
         id: 3,
         type: 'vocab',
@@ -190,89 +168,34 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
-      {
-        id: 5,
-        type: 'quiz',
-        title: 'Vocabulary Assessment',
-        content: {
-           quizList: [
-            { question: 'Koalas are ________ animals, making them hard to spot.', answer: 'cryptic', options: ['cryptic', 'canopy', 'refugia', 'hyperspectral'], correctOption: 0 },
-            { question: 'The drone flies above the ________ to scan leaves.', answer: 'canopy', options: ['ground', 'canopy', 'roots', 'trunk'], correctOption: 1 },
-            { question: 'During a fire, animals seek safety in a ________.', answer: 'refugia', options: ['city', 'refugia', 'desert', 'canopy'], correctOption: 1 },
-            { question: 'The sensor detects the unique spectral ________ of the tree.', answer: 'signature', options: ['sound', 'smell', 'signature', 'taste'], correctOption: 2 },
-            { question: 'This camera is ________, seeing more than the human eye.', answer: 'hyperspectral', options: ['hyperspectral', 'blind', 'monochrome', 'broken'], correctOption: 0 }
-           ]
-        }
-      },
+      // --- Split Quiz Section 2 ---
+      createQuizSlide(3.1, 'Hyperspectral cameras see...', 'More than eyes', ['Less than eyes', 'Black and white', 'More than eyes', 'Only heat'], 2, 'Vocab Check'),
+      createQuizSlide(3.2, 'Every species has a unique spectral...', 'Signature', ['Autograph', 'Signature', 'Sound', 'Smell'], 1, 'Vocab Check'),
+      createQuizSlide(3.3, 'An "Algorithm" is a set of...', 'Rules', ['Trees', 'Rules', 'Cameras', 'Sensors'], 1, 'Vocab Check'),
+      createQuizSlide(3.4, 'AI uses ________ to process data.', 'Algorithms', ['Refugia', 'Algorithms', 'Canopies', 'Tannins'], 1, 'Vocab Check'),
+      createQuizSlide(3.5, 'We identify trees by their light...', 'Signature', ['Weight', 'Height', 'Signature', 'Age'], 2, 'Vocab Check'),
+
       {
         id: 8,
         type: 'grammar',
         title: 'Grammar: Process & Method',
         content: {
-          heading: 'Expressing "How"',
+          heading: 'Timeline: The Airbear Process',
           text: [
-            'Meaning: Describing the method used to achieve a result.',
-            'Form: "By" + Gerund (Verb-ing) OR Passive Voice + "by" + Agent.',
-            'Example: "By mounting sensors on aircraft, researchers can scan vast tracts."'
+            'Step 1: Mounting sensors on aircraft to gain altitude.',
+            'Step 2: Scanning vast tracts of forest using hyperspectral imaging.',
+            'Step 3: Analyzing light signatures to find protein levels.',
+            'Step 4: Mapping the safest "refugia" for release.'
           ]
         }
       },
-      {
-        id: 12,
-        type: 'quiz',
-        title: 'Grammar Assessment - Combine Sentences',
-        content: {
-          quizList: [
-            { 
-              question: 'They analyze light. They find the protein level.', 
-              answer: 'By analyzing light, they find the protein level.',
-              options: [
-                'By analyzing light, they find the protein level.',
-                'They find the protein level by analyze light.',
-                'Analyzing light, the protein level is found.',
-                'By analyzed light, they find the protein level.'
-              ],
-              correctOption: 0
-            },
-            { 
-              question: 'The drone flies high. It scans the canopy.', 
-              answer: 'By flying high, the drone scans the canopy.',
-              options: [
-                'The drone scans the canopy by fly high.',
-                'By flying high, the drone scans the canopy.',
-                'To fly high, the drone scans the canopy.',
-                'Flying high, scans the drone canopy.'
-              ],
-              correctOption: 1
-            },
-            { 
-              question: 'They identify refugia. They save the species.', 
-              answer: 'They save the species by identifying refugia.',
-              options: [
-                'They identify refugia by saving the species.',
-                'They save the species by identifying refugia.',
-                'By save the species, they identify refugia.',
-                'Identifying refugia saves species.'
-              ],
-              correctOption: 1
-            }
-          ]
-        }
-      },
-      {
-        id: 13,
-        type: 'quiz',
-        title: 'Grammar Assessment - Prepositions',
-        content: {
-          quizList: [
-            { question: 'The problem is solved _____ using drones.', answer: 'by', options: ['on', 'by', 'with', 'at'], correctOption: 1 },
-            { question: 'Koalas are found _____ scanning the trees.', answer: 'by', options: ['to', 'for', 'by', 'in'], correctOption: 2 },
-            { question: 'Data is collected _____ the sensor.', answer: 'by', options: ['of', 'by', 'at', 'from'], correctOption: 1 },
-            { question: '_____ analyzing the leaf, we find poison.', answer: 'By', options: ['By', 'To', 'For', 'With'], correctOption: 0 },
-            { question: 'They help koalas _____ choosing good release sites.', answer: 'by', options: ['by', 'in', 'on', 'at'], correctOption: 0 }
-          ]
-        }
-      }
+      // --- Split Quiz Section 3 (Grammar) ---
+      createQuizSlide(12.1, 'Combine: "They fly drones. They scan trees."', 'By flying...', ['Flying drones, trees scan.', 'By flying drones, they scan trees.', 'To fly drones, trees scan.', 'Drones fly by scanning.'], 1, 'Grammar Check'),
+      createQuizSlide(12.2, 'Combine: "We analyze light. We find protein."', 'By analyzing...', ['By analyzing light, we find protein.', 'We find light by analyzing protein.', 'Analyze light to find protein.', 'Found protein by analyze light.'], 0, 'Grammar Check'),
+      createQuizSlide(12.3, 'Which preposition follows "achieved"?', 'By/Through', ['At', 'On', 'By/Through', 'In'], 2, 'Grammar Check'),
+      createQuizSlide(12.4, '"_____ using a thermal camera, we see heat."', 'By', ['To', 'For', 'By', 'At'], 2, 'Grammar Check'),
+      createQuizSlide(12.5, 'Success was reached _____ hard work.', 'By means of', ['Instead of', 'By means of', 'In spite of', 'Next to'], 1, 'Grammar Check'),
+      createQuizSlide(12.6, '"By _____ (mount) the sensor..."', 'Mounting', ['Mount', 'Mounts', 'Mounting', 'Mounted'], 2, 'Grammar Check'),
     ]
   },
   {
@@ -304,6 +227,12 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
+      // --- Split Quiz Section 1 ---
+      createQuizSlide(2.1, 'A "Recession" is a period of...', 'Decline', ['Growth', 'Decline', 'Stability', 'Boom'], 1, 'Vocab Check'),
+      createQuizSlide(2.2, 'During "Inflation", money buys...', 'Less', ['More', 'The same', 'Less', 'Everything'], 2, 'Vocab Check'),
+      createQuizSlide(2.3, '"Fiscal" policy relates to...', 'Taxes/Gov Spending', ['Bank interest', 'Taxes/Gov Spending', 'Imports', 'Technology'], 1, 'Vocab Check'),
+      createQuizSlide(2.4, 'The opposite of a "Recession" is...', 'Expansion/Boom', ['Crash', 'Inflation', 'Expansion/Boom', 'Deficit'], 2, 'Vocab Check'),
+
       {
         id: 3,
         type: 'vocab',
@@ -316,6 +245,12 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
+      // --- Split Quiz Section 2 ---
+      createQuizSlide(3.1, '"Decoupling" means...', 'Separating', ['Joining', 'Separating', 'Fixing', 'Buying'], 1, 'Vocab Check'),
+      createQuizSlide(3.2, 'If the market undergoes "Fragmentation", it...', 'Breaks apart', ['Unites', 'Grows', 'Breaks apart', 'Stops'], 2, 'Vocab Check'),
+      createQuizSlide(3.3, 'To "Precipitate" a crisis is to...', 'Cause it suddenly', ['Stop it', 'Predict it', 'Cause it suddenly', 'Watch it'], 2, 'Vocab Check'),
+      createQuizSlide(3.4, 'Which word suggests breaking into pieces?', 'Fragmentation', ['Decoupling', 'Fragmentation', 'Fiscal', 'Recession'], 1, 'Vocab Check'),
+
       {
         id: 4,
         type: 'vocab',
@@ -329,62 +264,36 @@ export const LESSONS: Lesson[] = [
           ]
         }
       },
-      {
-        id: 5,
-        type: 'quiz',
-        title: 'Vocabulary Check: Fill in the Blanks',
-        content: {
-          quizList: [
-            { question: 'The government avoided a deep ________ despite fears.', answer: 'recession', options: ['recession', 'inflation', 'depression', 'stagnation'], correctOption: 0 },
-            { question: 'Supply chain ________ caused delays in shipping.', answer: 'bottlenecks', options: ['bottlenecks', 'breakups', 'breakthroughs', 'bandits'], correctOption: 0 },
-            { question: 'Digital goods are examples of ________ growth.', answer: 'intangible', options: ['intangible', 'invisible', 'invincible', 'irrational'], correctOption: 0 },
-            { question: 'The ________ of trade into blocs is changing the world.', answer: 'fragmentation', options: ['fragmentation', 'augmentation', 'sedimentation', 'fermentation'], correctOption: 0 },
-            { question: 'High debt limits the government\'s ________ space.', answer: 'fiscal', options: ['fiscal', 'physical', 'festival', 'final'], correctOption: 0 }
-          ]
-        }
-      },
-      {
-        id: 6,
-        type: 'quiz',
-        title: 'Vocabulary Check: Concepts',
-        content: {
-          quizList: [
-            { question: 'Opposite of "Soft Landing"?', answer: 'Recession/Crash', options: ['Recession/Crash', 'Boom', 'Growth', 'Stability'], correctOption: 0 },
-            { question: 'Tax and government spending is called...?', answer: 'Fiscal policy', options: ['Monetary policy', 'Fiscal policy', 'Trade policy', 'Foreign policy'], correctOption: 1 },
-            { question: 'Software is a(n) ____ good.', answer: 'Intangible', options: ['Tangible', 'Intangible', 'Expensive', 'Imported'], correctOption: 1 },
-            { question: 'Breaking the world into trading blocs is...', answer: 'Fragmentation', options: ['Globalization', 'Fragmentation', 'Integration', 'Unification'], correctOption: 1 },
-            { question: 'Prices going up is...', answer: 'Inflation', options: ['Deflation', 'Inflation', 'Stagflation', 'Recession'], correctOption: 1 }
-          ]
-        }
-      },
+      // --- Split Quiz Section 3 ---
+      createQuizSlide(4.1, 'A "Bottleneck" causes...', 'Delays', ['Speed', 'Delays', 'Profits', 'Freedom'], 1, 'Vocab Check'),
+      createQuizSlide(4.2, 'Software is an ________ asset.', 'Intangible', ['Intangible', 'Physical', 'Heavy', 'Liquid'], 0, 'Vocab Check'),
+      createQuizSlide(4.3, 'A "Trilemma" involves how many choices?', 'Three', ['Two', 'Three', 'Four', 'Infinite'], 1, 'Vocab Check'),
+      createQuizSlide(4.4, '"Resilience" is the ability to...', 'Bounce back', ['Break', 'Bounce back', 'Give up', 'Predict'], 1, 'Vocab Check'),
+      createQuizSlide(4.5, 'Which is NOT intangible?', 'Gold bar', ['Copyright', 'Brand', 'Gold bar', 'Patent'], 2, 'Vocab Check'),
+
       {
         id: 8,
         type: 'grammar',
         title: 'Grammar: Concession & Contrast',
         content: {
-          heading: 'Weighing Arguments',
+          heading: 'Timeline of Arguments',
           text: [
-            'Meaning: Admitting a point (Concession) to then introduce a contrasting or more important point.',
-            'Direct Contrast: Conversely, On the other hand.',
-            'Unexpected Result: However, Nevertheless.',
-            'Simultaneous Difference: While, Whereas.'
+             'Argument A: The macro economy is doing well.',
+             'Transition: However,',
+             'Argument B: The average person feels poor.',
+             'Argument A: Tech is efficient.',
+             'Transition: Whereas,',
+             'Argument B: Construction is slow.'
           ]
         }
       },
-      {
-        id: 13,
-        type: 'quiz',
-        title: 'Grammar Assessment',
-        content: {
-          quizList: [
-            { question: 'Which word starts a sentence to show contrast?', answer: 'However', options: ['However', 'And', 'So', 'Because'], correctOption: 0 },
-            { question: '"_____ production flowed easily, now it is hard."', answer: 'While', options: ['While', 'Because', 'Therefore', 'Since'], correctOption: 0 },
-            { question: '"Friendly trade is good. _____, it is costly."', answer: 'On the other hand', options: ['On the other hand', 'Therefore', 'Additionally', 'As a result'], correctOption: 0 },
-            { question: 'Does "Conversely" mean the same or opposite?', answer: 'Opposite', options: ['Opposite', 'Same', 'Similar', 'Unrelated'], correctOption: 0 },
-            { question: 'Can "While" be used at the start of a sentence?', answer: 'Yes', options: ['Yes', 'No', 'Only in formal writing', 'Never'], correctOption: 0 }
-          ]
-        }
-      }
+      // --- Split Quiz Section 4 (Grammar) ---
+      createQuizSlide(13.1, 'Which word shows contrast?', 'However', ['And', 'So', 'However', 'Thus'], 2, 'Grammar Check'),
+      createQuizSlide(13.2, '"She is rich, _____ she is unhappy."', 'Yet/But', ['So', 'Because', 'Yet/But', 'Therefore'], 2, 'Grammar Check'),
+      createQuizSlide(13.3, '"_____ it rained, we played."', 'Although', ['Because', 'However', 'Although', 'Despite'], 2, 'Grammar Check'),
+      createQuizSlide(13.4, '"Prices rose. _____, sales fell."', 'Conversely', ['Also', 'Conversely', 'Similarly', 'And'], 1, 'Grammar Check'),
+      createQuizSlide(13.5, '"While" is used to show...', 'Simultaneous contrast', ['Cause', 'Effect', 'Simultaneous contrast', 'Time only'], 2, 'Grammar Check'),
+      createQuizSlide(13.6, '"Despite" is followed by a...', 'Noun/Gerund', ['Sentence', 'Noun/Gerund', 'Verb', 'Adjective'], 1, 'Grammar Check'),
     ]
   }
 ];
